@@ -32,6 +32,11 @@ namespace calcnum
             return ( (-0.4 * Math.Pow(x, 2)) + (2 * 2 * x) + (4 * 7) );
         }
 
+        static double Funcao1_3D(double x)
+        {
+            return (4 - (4 * x / 5));
+        }
+
         static double Funcao1_4(double x)
         {
             return ( 0.9 - (0.4 * x) ) / x;
@@ -124,15 +129,26 @@ namespace calcnum
         Derivar duas vezes e que sejam não nulas e preservem o sinal de [a, b]
         xo seja tal que f(xo)*f''(xo) > 0
         */
+
+        static double fa(double x)
+        {
+            return (Math.Pow(x, 3) - (9 * x) + 5);
+        }
+
+        static double fal(double x)
+        {
+            return (3 * Math.Pow(x, 2) - 9);
+        }
+
         static Resultado NewtonRaphson(double xo, double p)
         {
             int k = 1;
-            double x = xo - (Funcao2(xo) / Funcao2D(xo));
+            double x = xo - (Funcao1_3(xo) / Funcao1_3D(xo));
             while(Math.Abs(x - xo) > p)
             {
                 ++k;
                 xo = x;
-                x = xo - (Funcao2(xo) / Funcao2D(xo));
+                x = xo - (Funcao1_3(xo) / Funcao1_3D(xo));
             }
             return new Resultado { raiz = x, iteracoes = k };
         }
@@ -152,7 +168,7 @@ namespace calcnum
             Console.WriteLine("k = " + m.iteracoes);
             */
             Console.WriteLine("Newton Raphson");
-            Resultado n = NewtonRaphson(0.12, 1 * Math.Pow(10, -2));
+            Resultado n = NewtonRaphson(5, 0.001);
             Console.WriteLine("x = " + n.raiz);
             Console.WriteLine("k = " + n.iteracoes);
             Console.ReadKey();
