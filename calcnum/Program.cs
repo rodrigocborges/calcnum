@@ -11,6 +11,42 @@ namespace calcnum
             public int iteracoes { get; set; }
         }
 
+        // Definição das funções: FuncaoX_Y, Sendo 'X' o exercício e 'Y' a questão; D indica derivada
+        static double Funcao1_1(double x)
+        {
+            return ( Math.Cosh(x) - (2 * Math.Exp(-0.3 * x)) );
+        }
+
+        static double Funcao1_1D(double x)
+        {
+            return ( Math.Sinh(x) + (3/5 * Math.Exp(-0.3 * x)) );
+        }
+
+        static double Funcao1_2(double x)
+        {
+            return ( -2 + 7 * x - 5 * Math.Pow(x, 2) + 6 * Math.Pow(x, 3) );
+        }
+
+        static double Funcao1_3(double x)
+        {
+            return ( (-0.4 * Math.Pow(x, 2)) + (2 * 2 * x) + (4 * 7) );
+        }
+
+        static double Funcao1_4(double x)
+        {
+            return ( 0.9 - (0.4 * x) ) / x;
+        }
+
+        static double Funcao2(double x)
+        {
+            return ( (-1 / x) * ( Math.Sinh(-30 * x) - Math.Sinh(15 * x) ) - 120 );
+        }
+
+        static double Funcao2D(double x)
+        {
+            return ( (-Math.Sinh(30 * x) - Math.Sinh(15 * x)) / Math.Pow(x, 2) - (-30 * Math.Cosh(30 * x) - 15 * Math.Cosh(15 * x)) / x);
+        }
+
         //Definição da função
         static double Funcao(double x)
         {
@@ -54,13 +90,13 @@ namespace calcnum
             {
                 ++k;
                 x = (a + b) / 2;
-                if((Funcao(a) * Funcao(x)) > 0)
+                if((Funcao1_1(a) * Funcao1_1(x)) > 0)
                 {
-                    x = a;
+                    a = x;
                 }
                 else
                 {
-                    x = b;
+                    b = x;
                 }
             }
             return new Resultado { raiz = x, iteracoes = k };
@@ -91,12 +127,12 @@ namespace calcnum
         static Resultado NewtonRaphson(double xo, double p)
         {
             int k = 1;
-            double x = xo - (Funcao(xo) / FuncaoL(xo));
+            double x = xo - (Funcao2(xo) / Funcao2D(xo));
             while(Math.Abs(x - xo) > p)
             {
                 ++k;
                 xo = x;
-                x = xo - (Funcao(xo) / FuncaoL(xo));
+                x = xo - (Funcao2(xo) / Funcao2D(xo));
             }
             return new Resultado { raiz = x, iteracoes = k };
         }
@@ -105,18 +141,18 @@ namespace calcnum
         {
             //ChecarSinais(new int[] { -3, -2, -1, 0, 1, 2 });
 
-            //Console.WriteLine("Bissecção");
-            //Resultado b = Bisseccao(0, 1, 1 * Math.Pow(10, -8));
-            //Console.WriteLine("x = " + b.raiz);
-            //Console.WriteLine("k = " + b.iteracoes);
-
+            /*Console.WriteLine("Bissecção");
+            Resultado b = Bisseccao(-5, 0, 0.001);
+            Console.WriteLine("Raiz procurada (x): " + b.raiz);
+            Console.WriteLine("Número de iterações (k): " + b.iteracoes);
+            
             Console.WriteLine("MIL");
             Resultado m = MIL(0, 1 * Math.Pow(10, -8));
             Console.WriteLine("x = " + m.raiz);
             Console.WriteLine("k = " + m.iteracoes);
-
+            */
             Console.WriteLine("Newton Raphson");
-            Resultado n = NewtonRaphson(0, 1 * Math.Pow(10, -8));
+            Resultado n = NewtonRaphson(0.12, 1 * Math.Pow(10, -2));
             Console.WriteLine("x = " + n.raiz);
             Console.WriteLine("k = " + n.iteracoes);
             Console.ReadKey();
