@@ -52,6 +52,20 @@ namespace calcnum
             return ( (-Math.Sinh(30 * x) - Math.Sinh(15 * x)) / Math.Pow(x, 2) - (-30 * Math.Cosh(30 * x) - 15 * Math.Cosh(15 * x)) / x);
         }
 
+        static double Funcao3_0(double x)
+        {
+            return ( Math.Exp(-0.3 * x) * (Math.Sin(3 * x) - 0.6 * Math.Pow(x, 2) + 6) );
+        }
+
+        static double Funcao3(double x)
+        {
+            return (Math.Exp(-0.3 * x) * (-15 * Math.Sin(3 * x) + 150 * Math.Cos(3 * x) + 9 * Math.Pow(x, 2) - 60 * x)) / 50;
+        }
+        static double Funcao3D(double x)
+        {
+            return -(Math.Exp(-0.3 * x) * (4455 * Math.Sin(3 * x) + 900 * Math.Cos(3 * x) + 27 * Math.Pow(x, 2) - 360 * x + 600)) / 500;
+        }
+
         //Definição da função
         static double Funcao(double x)
         {
@@ -143,12 +157,12 @@ namespace calcnum
         static Resultado NewtonRaphson(double xo, double p)
         {
             int k = 1;
-            double x = xo - (Funcao1_3(xo) / Funcao1_3D(xo));
+            double x = xo - (Funcao3(xo) / Funcao3D(xo));
             while(Math.Abs(x - xo) > p)
             {
                 ++k;
                 xo = x;
-                x = xo - (Funcao1_3(xo) / Funcao1_3D(xo));
+                x = xo - (Funcao3(xo) / Funcao3D(xo));
             }
             return new Resultado { raiz = x, iteracoes = k };
         }
@@ -168,9 +182,11 @@ namespace calcnum
             Console.WriteLine("k = " + m.iteracoes);
             */
             Console.WriteLine("Newton Raphson");
-            Resultado n = NewtonRaphson(5, 0.001);
+            Resultado n = NewtonRaphson(0.5, 0.001);
+
             Console.WriteLine("x = " + n.raiz);
             Console.WriteLine("k = " + n.iteracoes);
+
             Console.ReadKey();
         }
     }
