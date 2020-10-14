@@ -27,6 +27,11 @@ namespace calcnum
             return ( -2 + 7 * x - 5 * Math.Pow(x, 2) + 6 * Math.Pow(x, 3) );
         }
 
+        static double Funcao1_2D(double x)
+        {
+            return (18 * Math.Pow(x, 2) - (10 * x) + 7);
+        }
+
         static double Funcao1_3(double x)
         {
             return ( (-0.4 * Math.Pow(x, 2)) + (2 * 2 * x) + (4 * 7) );
@@ -40,6 +45,11 @@ namespace calcnum
         static double Funcao1_4(double x)
         {
             return ( 0.9 - (0.4 * x) ) / x;
+        }
+
+        static double Funcao1_4D(double x)
+        {
+            return (-9 / (10 * Math.Pow(x, 2)));
         }
 
         static double Funcao2(double x)
@@ -121,6 +131,21 @@ namespace calcnum
             return new Resultado { raiz = x, iteracoes = k };
         }
         
+        static double FuncaoFI1_1(double x)
+        {
+            return -( (10 / 3) * Math.Log(Math.Cos(x) / 2) );
+        }
+
+        static double FuncaoFI1_2(double x)
+        {
+            return (1 / 7 * (-6 * Math.Pow(x, 3) + 5 * Math.Pow(x, 2) + 2));
+        }
+
+        static double FuncaoFI1_3(double x)
+        {
+            return ( 4 / 22 * Math.Pow(x, 2) - (47 / 22) );
+        }
+
         /*
         Função de iteração: iguala a função a 0 e isola o x (escolher a raiz positiva)
         Derivar
@@ -129,12 +154,12 @@ namespace calcnum
         static Resultado MIL(double xo, double p)
         {
             int k = 1;
-            double x = FuncaoFI(xo);
+            double x = FuncaoFI1_3(xo);
             while (Math.Abs(x - xo) > p)
             {
                 ++k;
                 xo = x;
-                x = FuncaoFI(xo);
+                x = FuncaoFI1_3(xo);
             }
             return new Resultado { raiz = x, iteracoes = k };
         }
@@ -144,25 +169,15 @@ namespace calcnum
         xo seja tal que f(xo)*f''(xo) > 0
         */
 
-        static double fa(double x)
-        {
-            return (Math.Pow(x, 3) - (9 * x) + 5);
-        }
-
-        static double fal(double x)
-        {
-            return (3 * Math.Pow(x, 2) - 9);
-        }
-
         static Resultado NewtonRaphson(double xo, double p)
         {
             int k = 1;
-            double x = xo - (Funcao3(xo) / Funcao3D(xo));
+            double x = xo - (Funcao1_4(xo) / Funcao1_4D(xo));
             while(Math.Abs(x - xo) > p)
             {
                 ++k;
                 xo = x;
-                x = xo - (Funcao3(xo) / Funcao3D(xo));
+                x = xo - (Funcao1_4(xo) / Funcao1_4D(xo));
             }
             return new Resultado { raiz = x, iteracoes = k };
         }
@@ -181,8 +196,7 @@ namespace calcnum
             Console.WriteLine("x = " + m.raiz);
             Console.WriteLine("k = " + m.iteracoes);
             */
-            Console.WriteLine("Newton Raphson");
-            Resultado n = NewtonRaphson(0.5, 0.001);
+            Resultado n = NewtonRaphson(1, 0.001);
 
             Console.WriteLine("x = " + n.raiz);
             Console.WriteLine("k = " + n.iteracoes);
